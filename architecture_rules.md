@@ -53,3 +53,15 @@ All dependencies must be injected. This facilitates decoupling and testability.
 - **Golden Rule:** Never use comments in code.
 - If the code is not clear enough to be understood without a comment, it must be refactored.
 - Documentation explaining the "why" behind complex decisions should reside in design documents or ADRs, not in line comments.
+## 8. Enums vs. Typed Constants
+
+The use of native TypeScript `enum` is discouraged. Instead, use literal objects with `as const` and extract the type from them. This provides better compatibility with functional patterns and nominal typing.
+
+```typescript
+export const EntityTypes = {
+  TYPE_A: 'TYPE_A',
+  TYPE_B: 'TYPE_B',
+} as const
+
+export type EntityType = (typeof EntityTypes)[keyof typeof EntityTypes]
+```
