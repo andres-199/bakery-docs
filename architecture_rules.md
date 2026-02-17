@@ -65,3 +65,9 @@ export const EntityTypes = {
 
 export type EntityType = (typeof EntityTypes)[keyof typeof EntityTypes]
 ```
+## 9. Entity Timestamps
+
+Every entity in the system must include `createdAt` and `updatedAt` properties. This provides auditability and state tracking for all business objects.
+
+- **Domain**: Proper types (`Date`) and initialized in factory methods.
+- **Infrastructure**: Use TypeORM's `@CreateDateColumn()` and `@UpdateDateColumn()`.
