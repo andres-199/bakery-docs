@@ -71,17 +71,23 @@ Every entity in the system must include `createdAt` and `updatedAt` properties. 
 
 - **Domain**: Proper types (`Date`) and initialized in factory methods.
 - **Infrastructure**: Use TypeORM's `@CreateDateColumn()` and `@UpdateDateColumn()`.
-10. ## 10. Frontend Architecture (React)
-11.
-12. ### Pure Presentation vs. Business Logic
-13. - **Presentation Components:** Pure components that only handle UI rendering. They receive data and callbacks via `props`. No side effects or state management (other than local UI state).
-14. - **Hooks (Logic):** Encapsulate business logic, form handling, and API interactions.
-15. - **Zustand (Global State):** Use Zustand for cross-component state. One store per module (e.g., `authStore`, `inventoryStore`).
-16.
-17. ### Component File Structure
-18. ```text
-19. my-component/
-20. ├── MyComponent.tsx       (Presentation)
-21. ├── useMyComponent.ts     (Logic/Hook)
-22. └── MyComponent.styles.ts (Optional: Styled components)
-23. ```
+10. ## 10. Frontend Architecture (React / Hexagonal)
+
+### Pure Presentation vs. Business Logic
+- **Domain:** Entities and pure business rules (if any).
+- **Application (Hooks/Logic):** Encapsulate business logic, form handling, and API orchestration. These are the "Use Cases" of the front.
+- **Infrastructure (Adapters):** External libraries like **Zustand (Global State)**, Axios (API Clients), or LocalStorage.
+- **Presentation (Components):** Pure components that only handle UI rendering. They receive data and callbacks via `props`.
+
+### Component File Structure
+```text
+my-module/
+├── application/
+│   └── hooks/          (Logic/Presenter)
+├── infrastructure/
+│   ├── state/          (Zustand Stores)
+│   └── api/            (Axios Clients)
+└── presentation/
+    ├── components/     (UI Components)
+    └── views/          (Layout Containers)
+```
